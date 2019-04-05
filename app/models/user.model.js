@@ -3,19 +3,22 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const UserSchema = mongoose.Schema({
     firstName: {
-        type: String
+        type: String, require: [true, 'First Name required']
     },
     lastName: {
-        type: String
+        type: String, require: [true, 'Last Name required']
     },
     email: {
-        type: String
+        type: String, require: [true, 'Email required']
     },
     password: {
-        type: String
+        type: String, require: [true, 'PassWord required']
     },
-
-}, {
+confirmPassword:{
+    type: String, require: [true, 'ConfirmPassWord required']
+},
+},
+    {
         timestamps: true
     });
 
@@ -30,7 +33,7 @@ userModel.prototype.registration = (body, callback) => {
         "email": body.email
     }, (err, data) => {
         if (err) {
-            console.log("Error in registration");db.createCollection(name, options)
+            console.log("Error in registration"); //db.createCollection(name, options)
             callback(err);
         } else if (data.length > 0) {
             console.log("Email already exists");
@@ -40,13 +43,16 @@ userModel.prototype.registration = (body, callback) => {
                 "firstName": body.firstName,
                 "lastName": body.lastName,
                 "email": body.email,
-                "password": hash(body.password)
+                "password": hash(body.password),
+                "confirmpassword":hash(body.password)
             });
             newUser.save((err, result) => {
                 if (err) {
                     console.log("Model not found");
                     callback(err);
                 } else {
+                    result.password=undefined,
+                    result.confirmPassword=undefined
                     console.log("Registered Successfully");
                     callback(null, result);
                 }
