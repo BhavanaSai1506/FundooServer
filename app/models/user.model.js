@@ -29,6 +29,7 @@ function hash(password) {
     return hash;
 }
 userModel.prototype.registration = (body, callback) => {
+    console.log('body madel=>',body)
     user.find({
         "email": body.email
     }, (err, data) => {
@@ -39,6 +40,7 @@ userModel.prototype.registration = (body, callback) => {
             console.log("Email already exists");
             callback("User already present")
         } else {
+            console.log(data);
             const newUser = new user({
                 "firstName": body.firstName,
                 "lastName": body.lastName,
@@ -72,15 +74,15 @@ userModel.prototype.login = (body, callback) => {
             bcrypt.compare(body.password, data.password).then(function (res) {
                 if (res) {
                     console.log("login succesfully");
-                    callback(null, res);
+                    return callback(null, res);
                 } else {
                     console.log("Incorrect password");
-                    callback("Incorrect password");
+                  return  callback("Incorrect password");
                 }
             });
         } else {
             console.log("Invalid user");
-            callback("invalid user");
+            callback(null,data);
         }
     })
 
@@ -124,14 +126,14 @@ userModel.prototype.confirmUser = (data, callback) => {
         }
     });
 }
-userModel.prototype.getAllUsers = (callback) => {
-    user.find({}, (err, result) => {
-        if (err) {
-            callback(err);
-        }
-        else {
-            callback(null, result);
-        }
-    });
-}
+// userModel.prototype.getAllUsers = (callback) => {
+//     user.find({}, (err, result) => {
+//         if (err) {
+//             callback(err);
+//         }
+//         else {
+//             callback(null, result);
+//         }
+//     });
+// }
 module.exports = new userModel();

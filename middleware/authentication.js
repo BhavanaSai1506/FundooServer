@@ -73,6 +73,7 @@ exports.checkToken = (req, res, next) => {
              */
             else {
                 req.decoded = decoded;
+                console.log("token",req.body)
                 next();
             }
         });
@@ -85,5 +86,31 @@ exports.checkToken = (req, res, next) => {
             success: false,
             message: 'No token provided.'
         });
+    }
+}
+
+exports.checkTokenAuthentication=(req,res,next)=>{
+    var token1=req.header['access-token']
+    if(token1){
+        jwt.verify(token1,'secretkeyAuthentication',(err,decoded)=>{
+            console.log('answer',token1);
+            if(err){
+                return res.send({
+                    success:false,
+                    message:'Token is not valid'
+                })
+            }
+            else{
+                req.decoded=decoded;
+                console.log('token',req.body)
+                next();
+            }
+        })
+    }
+    else{
+        return res.send({
+            success:false,
+            message:'nontoken provided'
+        })
     }
 }

@@ -8,7 +8,7 @@ route.post('/registration',userController.registration);
 route.post('/verifyUser', userController.getUser);
 route.post('/resetpassword/:token', loginMiddleware.checkToken,userController.setPassword);
 //router.post('/addMessage',chatControllers.addMessage);
-route.get('/getAllUsers',userController.getAllUsers);
+//route.get('/getAllUsers',userController.getAllUsers);
 //router.get('/getAllChats',chatControllers.getAllUserChats);
 
 module.exports=route;
