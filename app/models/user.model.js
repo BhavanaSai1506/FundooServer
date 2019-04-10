@@ -14,7 +14,7 @@ const UserSchema = mongoose.Schema({
     password: {
         type: String, require: [true, 'PassWord required']
     },
-confirmPassword:{
+confirmpassword:{
     type: String, require: [true, 'ConfirmPassWord required']
 },
 },
@@ -46,7 +46,7 @@ userModel.prototype.registration = (body, callback) => {
                 "lastName": body.lastName,
                 "email": body.email,
                 "password": hash(body.password),
-                "confirmpassword":hash(body.password)
+                "confirmpassword":hash(body.confirmpassword)
             });
             newUser.save((err, result) => {
                 if (err) {
