@@ -1,5 +1,6 @@
 
 
+
 const userModel=require('../app/models/user.model');
 
 
@@ -20,7 +21,8 @@ exports.registration=(data,callback)=>{
     }
 
     catch(err){
-        console.log("error in services",err);   
+        console.log("error in services",err);
+        
     }
 }
 
@@ -39,6 +41,8 @@ exports.login=(data,callback)=>{
             else
             {
                 console.log("server in connection(login)",/*result*/)
+                console.log("--------------------------");
+                
                 callback(null,result)
             }
         })
