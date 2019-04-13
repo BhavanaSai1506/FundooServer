@@ -1,43 +1,30 @@
-/**
- * define the nodemailers by const varaible
- */
-const nodemailer = require('nodemailer');
-/*
-Here we are configuring our SMTP Server details.
-STMP is mail server which is responsible for sending and recieving email.
-*/
-exports.sendEMailFunction = (url) => {
-    /**
-     * creating transport obj send mail
-     */
-    const transporter = nodemailer.createTransport({
+
+var nodeMailer = require('nodemailer');
+
+exports.sendEmailFunction = (userEmail) => {
+    var url = 'http://192.168.0.37:3000/resetPassword'
+
+    let transporter = nodeMailer.createTransport({
         service: 'gmail',
         auth: {
-            /**
-             * env creating and accesses the data from env
-             */
-            user: process.env.email,
-            pass: process.env.password
+            user: 'bhavanab1506@gmail.com',
+            pass: 'iloveuammabhavana'
         },
-    });
-    const mailOptions = {
-        from: process.env.email,        
-        /**sender address
-         */
-        to: process.env.email,   
-        /**list of receivers */
-        subject: 'node.js send mail',       
-        /**Subject line
-         */
-        text: ' verifaction link is:\n\n' + url
-    };
-    /**
-     * validating the errors throughcall back function passing err and info parameters along mail option parameter 
-     */
-    transporter.sendMail(mailOptions, (err, info) => {
-        if (err)
-            console.log("error on sent mail" + err)
-        else
-            console.log("result sent on mail" + info);
-    });
+    })
+
+    let HelperOptions = {
+        from: '"FundooApp" <bhavanab1506@gmail.com>',
+        to: userEmail,
+        subject: 'Reset Password',
+        text: 'click the link to change the password ' + url
+    }
+
+    transporter.sendMail(HelperOptions, (err, res) => {
+        if (err) {
+            console.log(err)
+        }
+        else {
+            console.log(res)
+        }
+    })
 }

@@ -121,7 +121,7 @@ userModel.prototype.login = (body, callback) => {
             /**
              * comparing password
              */
-            console.log("aaaaaaaaa  before comparing password")
+            console.log("Before comparing password")
            // console.log(bcrypt.compare(body.password, data.password));
 
             bcrypt.compare(body.password, data.password).then(function (res) {
