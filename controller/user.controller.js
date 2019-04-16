@@ -1,7 +1,8 @@
 const express = require('express')
 const userService = require('../services/userServices')
 const util = require('../util/token');
-const sentMail = require('../middleware/authentication')
+//const sentMail = require('../middleware/authentication')
+const sentMail = require('../middleware//sendMail')
 
 
 
@@ -118,6 +119,47 @@ exports.login = (req, res) => {
     }
 }
 
+exports.forgotPasswordController = (req, res) => {
+    try {
+        userService.forgotPasswordService(req.body, (err, result) => {
+            if (err) {
+                res.status(400).send({
+                    result: err
+                });
+            }
+            else {
+                res.status(200).send({
+                    result: result
+                });
+            }
+        })
+    }
+    catch (err) {
+        console.log("exception........!forgotpasswordcontroller");
+
+    }
+}
+
+exports.resetPasswordController = (req, res) => {
+    console.log(req.body);
+    userService.resetPasswordService(req.body, (err, result) => {
+        if (err) {
+            res.status(400).send({
+                result: err
+            });
+        }
+        else {
+            res.status(200).send({
+                result: result
+            });
+        }
+    })
+}
+
+
+
+
+
 exports.getUser = (req, res) => {
     try {
         var responseResult = {};
@@ -138,7 +180,8 @@ exports.getUser = (req, res) => {
                 const obj = util.GenerateTokenForResetPassword(payload);
                 //console.log("controller.obj=>",obj);
 
-                const url = 'http://loaclhost:3000/resetPassword/${obj.token}';
+            
+                  const url='http://192.168.0.14:3000/resetPassword';
                
 
                 sentMail.sendEmailFunction(req.body.email, url);
@@ -151,7 +194,6 @@ exports.getUser = (req, res) => {
 
     }
 }
-
 
 exports.sendResponse = (req, res) => {
     try {

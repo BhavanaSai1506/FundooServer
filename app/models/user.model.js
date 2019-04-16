@@ -143,6 +143,38 @@ userModel.prototype.login = (body, callback) => {
 }
 
 
+userModel.prototype.forgotPassword = (usersDetails, callback) => {
+    User.find({ "email": usersDetails.email }, (err, result) => {
+        if (err) {
+            return callback(err);
+        }
+        else if (result.length > 0) {
+            var middleware = require('../../middleware/sendMail')
+            middleware.sendEmailFunction(usersDetails.email)
+            return callback(null, "Take to reset password")
+        }
+        else {
+            return callback("invalid email")
+        }
+    })
+}
+
+userModel.prototype.resetPassword = (usersDetails, callback) => {
+    let newPassword = hash(usersDetails.password, saltRounds);
+    User.updateOne({ email: usersDetails.email }, { password: newPassword })
+        .then(function (res) {
+            if (res) {
+                return callback(null, "Password reset successful")
+            }
+            else {
+                return callback("Password reset unsuccessful");
+            }
+        })
+}
+
+
+
+
 userModel.prototype.findUserEmail = (data, callback) => {
     user.findOne({ "email": data.body.email }, (err, result) => {
         if (err) {
@@ -153,11 +185,12 @@ userModel.prototype.findUserEmail = (data, callback) => {
                 callback(null, result)
             }
             else {
-                callback("incorrect mail")
+                callback(null,"incorrect mail")
             }
         }
     })
 }
+
 
 
 userModel.prototype.confirmUser = (data, callback) => {
@@ -189,3 +222,51 @@ userModel.prototype.updateUserPassword = (req, callback) => {
 }
 
 module.exports = new userModel();
+
+
+// userModel.prototype.findUserEmail = (data, callback) => {
+//     user.findOne({ "email": data.body.email }, (err, result) => {
+//         if (err) {
+//             callback(err)
+//         }
+//         else {
+//             if (result !== null && data.body.email == result.email) {
+//                 callback(null, result)
+//             }
+//             else {
+//                 callback("incorrect mail")
+//             }
+//         }
+//     })
+// }
+
+
+// userModel.prototype.confirmUser = (data, callback) => {
+//     user.updateOne({ _id: data.payload.id }, { is_verified: true }, (err, result) => {
+//         if (err) {
+//             callback(err)
+//         }
+//         else {
+//             callback(null, result)
+//         }
+//     });
+// }
+
+
+// userModel.prototype.updateUserPassword = (req, callback) => {
+//     console.log("in model--data:--", req.decoded);
+//     console.log("in model--data:--", req.body);
+
+//     let newpassword = bcrypt.hashSync(req.body.password, saltrounds);
+//     log(("new pass bcrypt--", newpassword));
+//     user.updateOne({ _id: req.decoded.payload.user_id }, { password: newpassword }, (err, result) => {
+//         if (err) {
+//             callback(err)
+//         }
+//         else {
+//             callback(null, result)
+//         }
+//     })
+// }
+
+// module.exports = new userModel();

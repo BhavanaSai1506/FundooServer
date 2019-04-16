@@ -53,6 +53,27 @@ catch(err){
 }
 }
 
+exports.forgotPasswordService = (reqData, callback) => {
+    userModel.forgotPassword(reqData, (err, result) => {
+        if (err) {
+            return callback(err);
+        }
+        else {
+            return callback(null, result);
+        }
+    })
+}
+
+exports.resetPasswordService = (reqData, callback) => {
+    userModel.resetPassword(reqData, (err, result) => {
+        if (err) {
+            return callback(err);
+        }
+        else {
+            return callback(null, result);
+        }
+    })
+}
 
 exports.getUserEmail=(data,callback)=>{
     try{
@@ -70,6 +91,7 @@ exports.getUserEmail=(data,callback)=>{
         
     }
 }
+
 
 
 exports.redirect=(decoded,callback)=>{
