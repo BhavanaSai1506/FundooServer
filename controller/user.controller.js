@@ -174,14 +174,10 @@ exports.getUser = (req, res) => {
                     responseResult.result = result
 
                 const payload = {
-                    user_id: responseResult.result._id
+                    user_id: responseResult.result.user_id ////////////user
                 }
-                //console.log(payload);
                 const obj = util.GenerateTokenForResetPassword(payload);
-                //console.log("controller.obj=>",obj);
-
-            
-                  const url='http://192.168.0.14:3000/resetPassword';
+                  const url='http://192.168.0.14:3000/resetPassword/${obj.token}';
                
 
                 sentMail.sendEmailFunction(req.body.email, url);
