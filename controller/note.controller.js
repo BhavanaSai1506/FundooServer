@@ -1,6 +1,6 @@
 
 
-const noteService=require('../Services/noteServices')
+const noteService=require('../services/noteServices')
 
 exports.createNote=(req,res)=>{
 var responseResult={}

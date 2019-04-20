@@ -11,11 +11,11 @@ var noteSchema = new mongoSchema({
     type:String,
     ref:"UserSchema"
   },
-  userId:{
-    type:mongoSchema.Types.ObjectId,
-    ref: 'UserSchema',   
-    required:[true,"UserId required"]
-  },
+  // userId:{
+  //   type:mongoSchema.Types.ObjectId,
+  //   ref: 'UserSchema',   
+  //   required:[true,"UserId required"]
+  // },
 
   title: String,
   description: String,
@@ -41,7 +41,7 @@ noteModel.prototype.addNote = (objectNote, callback) => {
     console.log(objectNote.email);
     
   const newNote = new note({
-   // "userId":objectNote._id,
+    // "userId":objectNote._id,
     'title': objectNote.title,
     'description': objectNote.description
   })

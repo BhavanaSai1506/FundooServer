@@ -14,6 +14,7 @@ route.post('/forgotPassword', userController.forgotPasswordController);
 //route.post('/resetpassword/:token',loginMiddleware.checkToken,userController.setPassword) 
 
 route.post('/createNote',noteController.createNote)
-route.get('/getNotes',noteController.getNotes)
+route.get('/getAllNotes',noteController.getAllNotes)
+//route.get('/getNotes',noteController.getNotes)
 
 module.exports=route;
