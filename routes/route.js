@@ -15,6 +15,6 @@ route.post('/forgotPassword', userController.forgotPasswordController);
 
 route.post('/createNote',noteController.createNote)
 route.get('/getAllNotes',noteController.getAllNotes)
-//route.get('/getNotes',noteController.getNotes)
+route.get('/getNote',noteController.getNote)
 
 module.exports=route;

@@ -177,7 +177,7 @@ exports.getUser = (req, res) => {
                     user_id: responseResult.result.user_id ////////////user
                 }
                 const obj = util.GenerateTokenForResetPassword(payload);
-                  const url='http://192.168.0.14:3000/resetPassword/${obj.token}';
+                  const url='http://10.0.2.2:8000/resetPassword/${obj.token}';
                
 
                 sentMail.sendEmailFunction(req.body.email, url);

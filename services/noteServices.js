@@ -34,9 +34,9 @@ exports.getNote=(data,callback)=>{
 }
 
 exports.getAllNotes=(data,callback)=>{
-    console.log('1111===>',data.email);
+   // console.log('1111===>',data.email);
     noteModel.getAllNotes(data,(err,result)=>{
-        console.log('1111===>',data.email);
+        //console.log('1111===>',data.email);
         if(err){
             console.log("err in getallnotes(services)")
             callback(err)
