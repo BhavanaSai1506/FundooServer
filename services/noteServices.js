@@ -1,89 +1,4 @@
-// const noteModel=require('../app/models/note.model')
 
-
-// exports.createNote=(data,callback)=>{
-//     console.log('1111===>',data.email);
-    
-//     noteModel.addNote(data,(err,result)=>{
-//         console.log('1111===>',data.email);
-//         if(err)
-//         {
-//             console.log("error in noteservices(createnote");
-//             callback(err)
-//         }
-//         else
-//         {
-//             console.log("(addNote) in service",result);
-//             callback(null,result)
-//         }
-//     })
-// }
-
-// exports.getNote=(data,callback)=>{
-//     noteModel.getNote(data,(err,result)=>{
-//         if(err){
-//             console.log("error in getNotes(services)");
-//             callback(err)
-//         }
-//         else{
-//             console.log("(getNotes) in service",result)
-//             callback(null,result)
-//         }
-//     })
-
-// }
-
-// exports.getAllNotes=(data,callback)=>{
-//    // console.log('1111===>',data.email);
-//     noteModel.getAllNotes(data,(err,result)=>{
-//         //console.log('1111===>',data.email);
-//         if(err){
-//             console.log("err in getallnotes(services)")
-//             callback(err)
-//         }
-//         else{
-//             console.log('in service');
-//             callback(null,result)
-//         }
-//     })
-// }
-
-// exports.getTitle=(data,callback)=>{
-//     noteModel.getTitle(data,(err,result)=>{
-//         if(err){
-//             console.log("error in getTitle(services)");
-//             callback(err)
-//         }
-//         else{
-//             console.log("in service");
-//             callback(null,result)
-//         }
-//     })
-// }
-
-
-// exports.updatecolor = (paramID, paramData, res) => {
-//     try {
-//         notemodels.updatecolor(paramID, paramData, (err, data) => {
-//             if (err) {
-//                 console.log("err in service..");
-//                 res(err);
-//             }
-//             else {
-//                 console.log("service is working fine");
-//                 res(null, data);
-//             }
-//         })
-//     }
-//     catch (err) {
-//         console.log("error in services:", err);
-//     }
-// }
-
-
-
-
-/*********************************************************original******************************************************************************** */
 const noteModel = require('../app/models/note.model')
 
 
@@ -129,8 +44,8 @@ exports.getNotes = (data, callback) => {
 
 
 
-/*
-exports.updateColor = (paramId, data, callback)
+
+exports.updateColor = (paramId, data, callback)=>{
 try {
     noteModel.updateColor(paramId, data, (err, result) => {
         if (err) {
@@ -144,10 +59,15 @@ try {
 } catch (err) {
     console.log("error in servies", err);
 }
+}
 
-exports.deleteNote = (data, callback)
+
+exports.deleteNote = (data, callback)=>{
+
 try {
     noteModel.deleteNote(data, (err, result) => {
+        console.log("in ==>",result);
+        
         if (err) {
             console.log("error in deleting note", err);
             callback(err)
@@ -161,7 +81,7 @@ try {
 
 }
 
-
+}
 
 exports.editTitle=(data,callback)=>{
     try{
@@ -180,9 +100,22 @@ exports.editTitle=(data,callback)=>{
 }
 
 
+exports.editDescription=(data,callback)=>{
+    try{
+     noteModel.editDescription(data,(err,result)=>{
+         if(err){
+             console.log("error in editdescription(services)");
+             callback(err)
+         }else{
+             console.log("editdescription in service");
+             callback(null,result)
+         }
+     })
+    }catch(err){
+        console.log("error in services",err);        
+    }
+}
 
-
-*/
 
 
 
@@ -218,5 +151,7 @@ catch(err){
 }
 }
 */
+
+
 
 

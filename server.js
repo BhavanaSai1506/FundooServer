@@ -38,8 +38,8 @@ mongoose.connect(dbConfig.url , {
 app.get('/', (req, res) => {
     res.json({"message": "Welcome to EasyNotes application. Take notes quickly. Organize and keep track of all your notes."});
 });
-app.listen(8000,()=>{
-    console.log("Server is Listening to port 8000");
+app.listen(3000,()=>{
+    console.log("Server is Listening to port 3000");
     
 });
 
