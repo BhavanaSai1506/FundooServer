@@ -19,6 +19,7 @@
     "jsonwebtoken": "^8.5.0",
     "mongoose": "^5.4.19",
     "nodemailer": "^5.1.1",
-    "nodemon": "^1.18.11"
+    "nodemon": "^1.18.11",
+    "response-time": "^2.3.2"
   }
 }

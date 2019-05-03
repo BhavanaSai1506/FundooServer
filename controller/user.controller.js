@@ -1,222 +1,520 @@
-const express = require('express')
-const userService = require('../services/userServices')
-const util = require('../util/token');
-const sentMail = require('../middleware/sendMail')
+// const express = require('express')
+// const userService = require('../services/userServices')
+// const util = require('../util/token');
+// const sentMail = require('../middleware/sendMail')
 
 
 
-exports.registration = (req, res) => {
-    req.check('firstName', "FirstName should contain atleast three characters and is should not be empty").isLength({ min: 3 })
-    req.check('lastName', "LastName should contain atleast three characters and is shouldnt be empty ").isLength({ min: 3 })
-    req.check('email', "The email is Invalid").isEmail()
-    req.check('password', "Password should be atleast 6 characters and should have atleast 1 small,capital letters and one number ").isLength({ min: 6 })
+// exports.registration = (req, res) => {
+//     req.check('firstName', "FirstName should contain atleast three characters and is should not be empty").isLength({ min: 3 })
+//     req.check('lastName', "LastName should contain atleast three characters and is shouldnt be empty ").isLength({ min: 3 })
+//     req.check('email', "The email is Invalid").isEmail()
+//     req.check('password', "Password should be atleast 6 characters and should have atleast 1 small,capital letters and one number ").isLength({ min: 6 })
 
-    var errors = req.validationErrors();
+//     var errors = req.validationErrors();
 
-    //var responseResult = {};
+//     //var responseResult = {};
 
-    if (errors) {
-        responseResult.success = false;
-        responseResult.error = errors;
-        res.status(500).send(responseResult)
-    }
+//     if (errors) {
+//         responseResult.success = false;
+//         responseResult.error = errors;
+//         res.status(500).send(responseResult)
+//     }
 
-    else {
-        try {
-            //create response result
-            var responseResult = {}
-            /*acessinf the registration and passing the parameters request body from router and providing 
-                callback function with parameters result and error  */
+//     else {
+//         try {
+//             //create response result
+//             var responseResult = {}
+//             /*acessinf the registration and passing the parameters request body from router and providing 
+//                 callback function with parameters result and error  */
             
-            userService.registration(req.body, (err, result) => {
+//             userService.registration(req.body, (err, result) => {
 
-                if (err) {
-                    responseResult.success = false;
-                    responseResult.error = err;
-                    res.status(500).send(responseResult)
-                }
+//                 if (err) {
+//                     responseResult.success = false;
+//                     responseResult.error = err;
+//                     res.status(500).send(responseResult)
+//                 }
 
-                else {
-                    responseResult.success = true;
-                    responseResult.result = result;
-                    res.status(200).send(responseResult)
-                }
-            })
-        }
+//                 else {
+//                     responseResult.success = true;
+//                     responseResult.result = result;
+//                     res.status(200).send(responseResult)
+//                 }
+//             })
+//         }
 
-        catch (err) {
-            console.log("error in controller", err);
-        }
+//         catch (err) {
+//             console.log("error in controller", err);
+//         }
 
-    }
-}
+//     }
+// }
+
+// /**
+//  * Accessing the login and passing the parameters request body from router and 
+//  * providing callback function with parameters result and errors
+//  */
+
+// exports.login = (req, res) => {
+//     req.check('email', "The Email is invalid").isEmail()
+//     req.check('password', "Password should be atleast 6 characters and should have atleast 1 small,capital letters and one number").isLength({ min: 6 })
+
+//     var errors = req.validationErrors();
+
+//     var responseResult = {};
+
+//     if (errors) {
+//         responseResult.success = false;
+//         responseResult.error = errors;
+//         res.status(500).send(responseResult)
+//     }
+//     else {
+//         try {
+//             /**
+//              * redis should be written
+//              */
+
+//             /*  if(result)
+//               {
+//                   console.log("result"+result);
+//                   const resultJSON=JSON.parse(result);
+//                   return res.status(200).send(resultJSON);
+//               }
+//               else
+//                {
+//              */
+//             var responseResult = {}
+//             userService.login(req.body, (err, result) => {
+//                 if (err) {
+//                     responseResult.success = false;
+//                     responseResult.error = err;
+//                     res.status(500).send(responseResult)
+//                 }
+//                 else {
+//                     const payload = {
+//                         user_id: result._id,
+//                         email: result.email,
+//                         firstName: result.firstName,
+//                     }
+
+//                     const obj = util.GenerateTokenForAuthentication(payload);
+//                      console.log("controller.obj=>",obj);
+//                     responseResult.data=result,
+//                     responseResult.token=obj.token
+//                     res.status(200).send(responseResult)
+//                 }
+//             })
+//         }
+//         // }  
+
+
+//         catch (err) {
+//             console.log("Errors in Controller", err);
+
+//         }
+//     }
+// }
+
+// exports.getUser = (req, res) => {
+//     try {
+//         var responseResult = {};
+//         userService.getUserEmail(req, (err, result) => {
+//             if (err) {
+//                 responseResult.success = false,
+//                     responseResult.error = err,
+//                     res.status(500).send(responseResult)
+//             }
+//             else {
+//                 responseResult.success = true,
+//                     responseResult.result = result
+
+//                 const payload = {
+//                     user_id: responseResult.result._id
+//                 }
+//                 //console.log(payload);
+//                 const obj = util.GenerateTokenForResetPassword(payload);
+//                 //console.log("controller.obj=>",obj);
+
+//                 const url = 'http://loaclhost:3000/resetPassword/${obj.token}';
+//               //    const url='http://192.168.0.16:3000/resetPassword';
+               
+//                 sentMail.sendEmailFunction(req.body.email, url);
+//                 res.status(200).send(url)
+//             }
+//         })
+//     }
+//     catch (err) {
+//         console.log("error in controllers", err);
+
+//     }
+// }
+
+
+// exports.sendResponse = (req, res) => {
+//     try {
+//         var responseResult = {}
+//         console.log("token is verified and giving response");
+//         userService.redirect(req.decoded, (err, result) => {
+//             if (err) {
+//                 responseResult.success = false;
+//                 responseResult.error = err;
+//                 res.status(500).send(responseResult);
+//             }
+//             else {
+//                 console.log("token is verified and giving response");
+//                 responseResult.success = true;
+//                 responseResult.result = result;
+//                 res.status(200).send(responseResult)
+//             }
+//         })
+//     }
+//     catch (err) {
+//         console.log("error in controller", err);
+
+//     }
+// }
+
+
+// exports.setPassword = (req, res) => {
+//     try {
+//         var responseResult = {}
+//         userService.resetPassword(req, (err, result) => {
+//             if (err) {
+//                 responseResult.success = false;
+//                 responseResult.err = err;
+//                 res.status(500).send(responseResult)
+//             }
+//             else {
+//                 console.log("under user control,the token is verified and giving response");
+//                 responseResult.success = true;
+//                 responseResult.result = result;
+//                 res.status(200).send(responseResult)
+//             }
+//         })
+//     }
+//     catch (err) {
+//         console.log("error in controller", err);
+//     }
+// }
+
+
+// exports.getAllUsers=(req,res)=>{
+//     try{
+//         var responseResult={}
+//         userService.getAllUsers((err,result)=>{
+//             if(err){
+//                 responseResult.success=false,
+//                 responseResult.err=err,
+//                 res.status(500).send(responseResult)
+//             }
+//             else{
+//                 responseResult.success=true,
+//                 responseResult.result=result,
+//                 res.status(200).send(responseResult)
+//             }
+//         })
+//     }
+//     catch(err){
+//         console.log("error in controller",err)
+//     }
+// }
+
 
 /**
- * Accessing the login and passing the parameters request body from router and 
- * providing callback function with parameters result and errors
+ * @description:import the services file
+ */
+var userservices = require('../services/userServices');
+/**
+ * @description:import the token file
+ */
+var gentoken = require('../util/token');
+/**
+ * @description:import the sendmail file
+ */
+const sendmail = require('../middleware/sendMail')
+
+const responseTime = require('response-time')
+
+const redis = require('redis');
+
+const bcrypt = require('bcrypt');
+const express = require('express');
+const app = express();
+var jwt = require('jsonwebtoken');
+/**
+ * @description:login is used to check the data is present in database or not..
+ * @param {request from front end} req 
+ * @param {response from backend} res 
  */
 
+const client = redis.createClient();
+
+// Print redis errors to the console
+client.on('error', (err) => {
+    console.log("Error " + err);
+});
+
+app.use(responseTime());
+/////////////////////////////////////////////////////////////////////////
 exports.login = (req, res) => {
-    req.check('email', "The Email is invalid").isEmail()
-    req.check('password', "Password should be atleast 6 characters and should have atleast 1 small,capital letters and one number").isLength({ min: 6 })
+    console.log("request in req", req.body);
 
-    var errors = req.validationErrors();
+    try {
+        req.checkBody('email', 'Email is not valid').isEmail();
+        req.checkBody('password', 'password is not valid').isLength({ min: 4 })
+        var errors = req.validationErrors();
+        var response = {};
+        if (errors) {
+            response.sucess = false;
+            response.error = errors;
+            res.status(422).send(response);
+        }
+        else {
+            // create and connect redis client to local instance.
+            // Extract the query from url and trim trailing spaces
+            //  const query = (req.body.email+req.body._id).trim();
+            // Build the Wikipedia API url
+            const redisKey = req.body.email + req.body.userId;
+            console.log("rediskey from front", redisKey);
+            // Try fetching the result from Redis first in case we have it cached
+            return client.get(redisKey, (err, result) => {
+                // If that key exist in Redis store
+                console.log("result==>", result);
 
-    var responseResult = {};
+                console.log("redis cacheee entered first");
+                if (result) {
 
-    if (errors) {
-        responseResult.success = false;
-        responseResult.error = errors;
-        res.status(500).send(responseResult)
-    }
-    else {
-        try {
-            /**
-             * redis should be written
-             */
+                    const resultJSON = JSON.parse(result);
+                    //   console.log("resultJSON==>",resultJSON);
+                    jwt.verify(resultJSON, 'secretkey-Authentication', (err, decoded) => {
+                        if (err) {
+                            console.log("token invalid--->", err);
+                        }
+                        else {
+                            bcrypt.compare(req.body.password, decoded.payload.password)
+                                .then(function (res1) {
+                                    if (res1) {
+                                        console.log("redis cacheee entered");
+                                        console.log('redis cache data ==>' + result);
+                                        const resultJSON = JSON.parse(result);
+                                        return res.status(200).send(resultJSON);
+                                    }
+                                    else {
+                                        var response = {}
+                                        /**
+                                         * @description:pass the request data to sevices....
+                                         */
+                                        console.log("Incorrect password in redis");
 
-            /*  if(result)
-              {
-                  console.log("result"+result);
-                  const resultJSON=JSON.parse(result);
-                  return res.status(200).send(resultJSON);
-              }
-              else
-               {
-             */
-            var responseResult = {}
-            userService.login(req.body, (err, result) => {
-                if (err) {
-                    responseResult.success = false;
-                    responseResult.error = err;
-                    res.status(500).send(responseResult)
+                                        response.sucess = false;
+                                        response.result = "Incorrect password";
+                                        res.status(500).send(response);
+
+                                    }
+                                })
+                        }
+                    })
+
                 }
                 else {
-                    const payload = {
-                        user_id: result._id,
-                        email: result.email,
-                        firstName: result.firstName,
-                    }
+                    var response = {}
+                    /**
+                     * @description:pass the request data to sevices....
+                     */
+                    userservices.loginusers(req, (err, result) => {
+                        if (err) {
+                            response.sucess = false;
+                            response.result = err;
+                            res.status(500).send(response);
+                        }
+                        else {
+                            const payload = {
+                                user_id: result._id,
+                                username: result.firstname,
+                                email: result.email,
+                                profilepic: result.profilepic,
+                                password: result.password,
+                                sucess: true
+                            }
+                            const obj = gentoken.GenerateTokenAuthentication(payload);
+                            console.log("object in controler==>", obj);
+                            console.log("result", result);
 
-                    const obj = util.GenerateTokenForAuthentication(payload);
-                    responseResult.data=result,
-                    responseResult.token=obj.token
-                    res.status(200).send(responseResult)
+                            response.token = obj;
+
+                            // const redisKey = 'email_'+responce._id;
+                            // client.set(redisKey, 86400, JSON.stringify(responce));
+                            const redisKey1 = result.email + result._id;
+                            console.log("rediskey", redisKey1);
+                            //   console.log("rediskey-------------------------------------------");
+                            //client.set(redisKey, 86400, query);
+                            client.setex(redisKey1, 3600, JSON.stringify(response.token.token));
+                            return res.status(200).send(response.token.token);
+                        }
+                    })
+                }
+            });
+
+        }
+    }
+    catch (err) {
+        console.log("error in controller :", err);
+    }
+}
+/**
+ * @description:register is used to register the user data in database...
+ */
+exports.register = (req, res) => {
+    try {
+        console.log("request in req", req.body);
+        req.checkBody('firstname', 'Firstname is not valid').isLength({ min: 3 }).isAlpha();
+        req.checkBody('lastname', 'Lastname is not valid').isLength({ min: 3 }).isAlpha();
+        req.checkBody('email', 'Email is not valid').isEmail();
+        req.checkBody('password', 'password is not valid').isLength({ min: 4 });
+        var errors = req.validationErrors();
+        var response = {};
+        if (errors) {
+            response.success = false;
+            response.error = errors;
+            return res.status(422).send(response);
+        } else {
+            var responsedata = {}
+            userservices.registers(req, (err, result) => {
+                if (err) {
+                    responsedata.sucess = false;
+                    responsedata.result = err;
+                    res.status(500).send(responsedata);
+                }
+                else {
+                    responsedata.sucess = true;
+                    responsedata.result = "registration sucessfully";
+                    res.status(200).send(responsedata);
                 }
             })
         }
-        // }  
-
-
-        catch (err) {
-            console.log("Errors in Controller", err);
-
-        }
-    }
-}
-
-exports.getUser = (req, res) => {
-    try {
-        var responseResult = {};
-        userService.getUserEmail(req, (err, result) => {
-            if (err) {
-                responseResult.success = false,
-                    responseResult.error = err,
-                    res.status(500).send(responseResult)
-            }
-            else {
-                responseResult.success = true,
-                    responseResult.result = result
-
-                const payload = {
-                    user_id: responseResult.result._id
-                }
-                //console.log(payload);
-                const obj = util.GenerateTokenForResetPassword(payload);
-                //console.log("controller.obj=>",obj);
-
-                const url = 'http://loaclhost:3000/resetPassword/${obj.token}';
-              //    const url='http://192.168.0.16:3000/resetPassword';
-               
-                sentMail.sendEmailFunction(req.body.email, url);
-                res.status(200).send(url)
-            }
-        })
     }
     catch (err) {
-        console.log("error in controllers", err);
+        console.log("error in controller,", err);
+    }
+}
+/**
+ * @description:finduser use to find the data is present or not...
+ */
 
+exports.finduser = (req, res) => {
+    try {
+        req.checkBody('email', 'Email is not valid..').isEmail();
+        var errors = req.validationErrors();
+        var response = {};
+        if (errors) {
+            response.success = false;
+            response.error = errors;
+            res.status(422).send(errors);
+        }
+        else {
+
+            var respondresult = {};
+            userservices.checkuser(req, (err, result) => {
+                if (err) {
+                    respondresult.success = false;
+                    respondresult.result = err;
+                    res.status(500).send(respondresult);
+                }
+                else {
+                    console.log("result is true : " + result);
+                    respondresult.success = true;
+                    respondresult.result = result;
+                    const payload = {
+                        user_id: result[0]._id
+                    }
+                    //    console.log("payload in controlller=====>",payload);
+                    const obj = gentoken.GenerateTokenresetpassword(payload);
+                    const url = `http://localhost:3000/resetpassword/${obj.token}`;
+                    sendmail.sendEMailFunction(url);
+                    //Send email using this token generated     
+                    console.log("url in controller");
+                    res.status(200).send(url);
+                }
+            })
+        }
+    }
+    catch (err) {
+        console.log("error in controller,", err);
+    }
+}
+/**
+ * @description:setpassword is used to update the password in database...
+ */
+exports.setPassword = (req, res) => {
+    try {
+        console.log("controller in req==>", req.body);
+
+        req.checkBody('password', 'password not valid ').isLength({ min: 4 });
+        var errors = req.validationErrors();
+        var responses = {};
+        if (errors) {
+            responses.sucess = false;
+            responses.result = errors;
+            res.status(422).send(errors);
+        }
+        else {
+            var response = {};
+            userservices.setpass(req, (err, result) => {
+                if (err) {
+                    response.success = false;
+                    response.result = err;
+                    res.status(500).send(response);
+                }
+                else {
+                    response.success = true;
+                    response.result = result;
+                    res.status(200).send(response);
+                }
+            })
+        }
+    } catch (err) {
+        console.log("error in controller,", err);
     }
 }
 
-
-exports.sendResponse = (req, res) => {
+exports.setProfilePic = (req, res) => {
     try {
-        var responseResult = {}
-        console.log("token is verified and giving response");
-        userService.redirect(req.decoded, (err, result) => {
+        // console.log("req-------------------->",req.decoded);
+        console.log("req-------------------->", req.file)
+        var responseResult = {};
+        userId = req.decoded.payload.user_id;
+        let image = (req.file.location)
+        userservices.setProfilePic(userId, image, (err, result) => {
+            console.log("imageeeeeeeeeeeeeeeeeeeeeeee  result pic=>", result);
             if (err) {
                 responseResult.success = false;
                 responseResult.error = err;
-                res.status(500).send(responseResult);
-            }
-            else {
-                console.log("token is verified and giving response");
-                responseResult.success = true;
-                responseResult.result = result;
-                res.status(200).send(responseResult)
-            }
-        })
-    }
-    catch (err) {
-        console.log("error in controller", err);
-
-    }
-}
-
-
-exports.setPassword = (req, res) => {
-    try {
-        var responseResult = {}
-        userService.resetPassword(req, (err, result) => {
-            if (err) {
-                responseResult.success = false;
-                responseResult.err = err;
                 res.status(500).send(responseResult)
-            }
-            else {
-                console.log("under user control,the token is verified and giving response");
-                responseResult.success = true;
-                responseResult.result = result;
-                res.status(200).send(responseResult)
+            } else {
+                responseResult.status = true;
+                responseResult.data = result;
+                res.status(200).send(responseResult);
             }
         })
-    }
-    catch (err) {
-        console.log("error in controller", err);
-    }
-}
-
-
-exports.getAllUsers=(req,res)=>{
-    try{
-        var responseResult={}
-        userService.getAllUsers((err,result)=>{
-            if(err){
-                responseResult.success=false,
-                responseResult.err=err,
-                res.status(500).send(responseResult)
-            }
-            else{
-                responseResult.success=true,
-                responseResult.result=result,
-                res.status(200).send(responseResult)
-            }
-        })
-    }
-    catch(err){
-        console.log("error in controller",err)
+    } catch (error) {
+        res.send(error);
     }
 }
+exports.deleteredis = (req, res) => {
+
+    console.log("req in logout-->", req.body);
+    const redisKey = req.body.email + req.body.userid;
+
+    client.del(redisKey, (err, response) => {
+        if (response == 1) {
+            console.log("Deleted Successfully!")
 
 
+            res.status(200).send("Deleted Successfully!");
+        } else {
+            console.log("Cannot delete")
+            res.status(500).send("Cannot delete");
+        }
+    })
+}
