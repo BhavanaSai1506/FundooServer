@@ -178,7 +178,7 @@
 
 
 
-var notemodels =  require('../app/models/note.model');
+// var notemodels =  require('../app/models/note.model');
 
 // const EventEmitter = require('events');
 
@@ -186,342 +186,178 @@ var notemodels =  require('../app/models/note.model');
 // const myEmitter = new MyEmitter();
 
 
-exports.notecreate = (req, res) => {
+
+
+const noteModel = require('../app/models/note.model')
+
+
+exports.createNote = (data, callback) => {
     try {
-        notemodels.CreateNote(req, (err, data) => {
+        noteModel.createNote(data, (err, result) => {
+
             if (err) {
-                console.log("err in service..");
-                res(err);
+                console.log("error in noteservices(createnote)");
+                callback(err)
             }
             else {
-                console.log("service is working fine");
-                // myEmitter.on('event', (a, b) => {
-                //     console.log(a, b, this);
-                //     // Prints: a b {}
-                //   });
-
-                res(null, data);
+                console.log("(addNote) in service");
+                callback(null, result)
             }
         })
     }
-    catch (err) {
-        console.log("error in services:", err);
+    catch (error) {
+        console.log("error in services", error);
+
     }
 }
 
-exports.noteget = (req, res) => {
+exports.getNotes = (data, callback) => {
     try {
-        notemodels.getnote(req, (err, data) => {
+        noteModel.getNotes(data, (err, result) => {
             if (err) {
-                console.log("err in service..");
-                res(err);
+                console.log("error in getNotes(services)");
+                callback(err)
             }
             else {
-                console.log("service is working fine");
-                res(null, data);
+                console.log("(getNotes) in service");
+                callback(null, result)
             }
         })
+
     }
     catch (err) {
-        console.log("error in services:", err);
-
-
+        console.log("error in services", err);
     }
 }
 
-
-exports.updatecolor = (paramID, paramData, res) => {
+exports.updateColor = (paramId, data, callback) => {
     try {
-        notemodels.updatecolor(paramID, paramData, (err, data) => {
+        noteModel.updateColor(paramId, data, (err, result) => {
             if (err) {
-                console.log("err in service..");
-                res(err);
-            }
-            else {
-                console.log("service is working fine");
-                res(null, data);
-            }
-        })
-    }
-    catch (err) {
-        console.log("error in services:", err);
-    }
-}
-exports.deleteNote = (req, res) => {
-    try {
-        notemodels.deleteNote(req, (err, data) => {
-            if (err) {
-                console.log("err in service..");
-                res(err);
-            }
-            else {
-                console.log("service is working fine");
-                res(null, data);
-            }
-        })
-    }
-    catch (err) {
-        console.log("error in services:", err);
-
-    }
-}
-
-
-exports.isArchived = (paramID, paramData, res) => {
-    try {
-        notemodels.isArchived(paramID, paramData, (err, data) => {
-            if (err) {
-                console.log("err in service..");
-                res(err);
-            }
-            else {
-                console.log("service is working fine");
-                res(null, data);
-            }
-        })
-    }
-    catch (err) {
-        console.log("error in services:", err);
-    }
-}
-
-
-exports.setReminder = (paramID, paramData, res) => {
-    try {
-        notemodels.setReminder(paramID, paramData, (err, data) => {
-            if (err) {
-                console.log("err in service..");
-                res(err);
-            }
-            else {
-                console.log("service is working fine");
-                res(null, data);
-            }
-        })
-    }
-    catch (err) {
-        console.log("error in services:", err);
-    }
-}
-
-exports.editTitle = (paramID, paramData, res) => {
-    try {
-        notemodels.editTitle(paramID, paramData, (err, data) => {
-            if (err) {
-                console.log("err in service..");
-                res(err);
-            }
-            else {
-                console.log("service is working fine");
-                res(null, data);
-            }
-        })
-    }
-    catch (err) {
-        console.log("error in services:", err);
-    }
-}
-
-exports.editDescription = (paramID, paramData, res) => {
-    try {
-        notemodels.editDescription(paramID, paramData, (err, data) => {
-            if (err) {
-                console.log("err in service..");
-                res(err);
-            }
-            else {
-                console.log("service is working fine");
-                res(null, data);
-            }
-        })
-    }
-    catch (err) {
-        console.log("error in services:", err);
-    }
-}
-
-
-exports.isTrash = (paramID, callback) => {
-    console.log("in services", paramID);
-    notemodels.getTrashStatus(paramID, (err, status) => {
-        if (err) {
-            callback(err);
-        } else {
-            if (status === true) {
-                let data = {
-                    status: false
-                }
-                notemodels.isTrashed(paramID, data, (err, result) => {
-                    if (err) {
-                        callback(err);
-                    } else {
-                        return callback(null, result)
-                    }
-                })
-            } else if (status === false) {
-                let data = {
-                    status: true
-                }
-                notemodels.isTrashed(paramID, data, (err, result) => {
-                    if (err) {
-                        callback(err);
-                    } else {
-                        return callback(null, result)
-                    }
-                })
-            }
-
-        }
-    })
-
-
-}
-
-
-exports.updatePin = (paramID, paramData, res) => {
-    try {
-        notemodels.updatePin(paramID, paramData, (err, data) => {
-            if (err) {
-                console.log("err in service..");
-                res(err);
-            }
-            else {
-                console.log("service is working fine");
-                res(null, data);
-            }
-        })
-    }
-    catch (err) {
-        console.log("error in services:", err);
-    }
-}
-
-
-exports.updateImage = (paramID, paramData, res) => {
-    try {
-        notemodels.updateImage(paramID, paramData, (err, data) => {
-            if (err) {
-                console.log("err in service..");
-                res(err);
-            }
-            else {
-                console.log("service is working fine");
-                res(null, data);
-            }
-        })
-    }
-    catch (err) {
-        console.log("error in services:", err);
-    }
-}
-
-exports.saveLabelToNote = (paramData, callback) => {
-    console.log("in services", paramData);
-    if (paramData.pull) {
-        notemodels.deleteLabelToNote(paramData, (err, result) => {
-            if (err) {
-                callback(err);
+                console.log("error in updating color", err);
+                callback(err)
             } else {
-                return callback(null, result)
+                console.log("in service", result);
+                callback(null, result)
             }
         })
+    } catch (err) {
+        console.log("error in servies", err);
     }
-    else {
+}
 
-        notemodels.saveLabelToNote(paramData, (err, result) => {
+
+exports.deleteNote = (data, callback) => {
+
+    try {
+        noteModel.deleteNote(data, (err, result) => {
+            // console.log("in ==>",result);
+
             if (err) {
-                callback(err);
+                console.log("error in deleting note", err);
+                callback(err)
             } else {
-                return callback(null, result)
+                console.log("in service");
+                callback(null, result)
             }
         })
+    } catch (err) {
+        console.log("error in servies", err);
+
+    }
+
+}
+
+exports.editTitle = (data, callback) => {
+    try {
+        noteModel.editTitle(data, (err, result) => {
+            if (err) {
+                console.log("error in editTitle(services)");
+                callback(err)
+            } else {
+                console.log(("editTitle method in service"));
+                callback(null, result)
+            }
+        })
+    } catch (err) {
+        console.log("error in services", err);
     }
 }
 
-exports.deleteLabelToNote = (paramData, callback) => {
-    console.log("in services", paramData);
 
-    notemodels.deleteLabelToNote(paramData, (err, result) => {
-        if (err) {
-            callback(err);
-        } else {
-            return callback(null, result)
-        }
-    })
+exports.editDescription = (data, callback) => {
+    try {
+        console.log("\ndataId==>", data.noteId);
+        console.log("decription==>", data.description);
+
+
+        noteModel.editDescription(data.noteId, data.description, (err, result) => {
+            if (err) {
+                console.log("error in editdescription(services)");
+                callback(err)
+            } else {
+                console.log("editdescription in service");
+                callback(null, result)
+            }
+        })
+    } catch (err) {
+        console.log("errors in services", err);
+    }
+}
+
+
+
+exports.isArchived = (paramId, paramData, callback) => {
+    try {
+        noteModel.isArchived(paramId, paramData, (err, result) => {
+            if (err) {
+                console.log("error in Services archive", err);
+                callback(err)
+            } else {
+                console.log("in service");
+                callback(null, result)
+            }
+        })
+    } catch (err) {
+        console.log("error in services catch", err);
+
+    }
+}
+
+exports.isPinned = (noteId, pinnedData, callback) => {
+    try {
+        noteModel.isPinned(noteId, pinnedData, (err, result) => {
+            if (err) {
+                console.log("error in services pinned");
+                callback(err)
+            } else {
+                console.log("in service");
+                callback(null, result)
+            }
+        })
+    } catch (err) {
+        console.log("error in services catch", err);
+
+    }
+}
+
+exports.isTrashed=(noteId,trashData,callback)=>{
+    try{
+        noteModel.isTrashed(noteId,trashData,(err,result)=>{
+            if(err){
+                console.log("error in services trash");
+                callback(err)
+            }else{
+                console.log("in service",result);
+                callback(null,result)
+            }
+        })
+    }catch(err){
+        console.log("error in services catch",err) 
+    }
 }
 
 
 
 
-exports.addLabel = (labelData, callback) => {
-    ///  console.log("in services",labelData);
 
-    notemodels.addLabel(labelData, (err, result) => {
-        if (err) {
-            callback(err);
-        } else {
-            return callback(null, result)
-        }
-    })
-}
-
-exports.getLabels = (labelData, callback) => {
-    //  console.log("in services",labelData);
-
-    notemodels.getLabels(labelData, (err, result) => {
-        if (err) {
-            callback(err);
-        } else {
-            return callback(null, result)
-        }
-    })
-}
-exports.deleteLabel = (labelData, callback) => {
-    // console.log("in services",labelData);
-
-    notemodels.deleteLabel(labelData, (err, result) => {
-        if (err) {
-            callback(err);
-        } else {
-            return callback(null, result)
-        }
-    })
-}
-
-exports.updateLabel = (labelData, callback) => {
-    //  console.log("in services",labelData);
-
-    notemodels.updateLabel(labelData, (err, result) => {
-        if (err) {
-            callback(err);
-        } else {
-            return callback(null, result)
-        }
-    })
-}
-
-exports.updateqanda = async (qandaData, callback) => {
-    //  console.log("in services",labelData);
-
-   await notemodels.updateqanda(qandaData, (err, result) => {
-        if (err) {
-            callback(err);
-        } else {
-            return callback(null, result)
-        }
-    })
-}
-
-
-
-exports.getqandadetail = (qandaData, callback) => {
-    //  console.log("in services",labelData);
-
-    notemodels.getqandadetails(qandaData, (err, result) => {
-        if (err) {
-            callback(err);
-        } else {
-            return callback(null, result)
-        }
-    })
-}

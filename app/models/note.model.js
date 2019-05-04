@@ -1,806 +1,286 @@
-// const mongoose = require('mongoose');
-// const mongoSchema = mongoose.Schema
-// var noteSchema = new mongoSchema({
-//  userId: {
-//     type: mongoSchema.Types.ObjectId,
-//     ref: 'User',
-//     required: [true, "UserId required"]
-//   },
-//   title: {
-//     type: String
-//   },
-//   description: {
-//     type: String
-//   },
-//   archive: {
-//     type: Boolean
-//   },
-//   color: {
-//     type: String
-//   },
-
-// },
-//   {
-//     timestamps: true,
-//   },
-
-// );
-// var note = mongoose.model("Note", noteSchema)
-
-// //function noteModel() { }
-
-// function noteModel() { }
-
-// // noteModel.prototype.createNote = (objectNote, callback) => {
-// //   //console.log("Input in create note==>", objectNote.body);
-// //   var obj = {
-// //     "userId": objectNote.decoded.payload.user_id,
-// //     "title": objectNote.body.title,
-// //     "description": objectNote.body.description,
-// //     "archive": objectNote.body.archive
-// //   }
-// //   console.log("======================", obj);
-// //   const noteData = new note(obj)
-// //   noteData.save((err, result) => {
-// //     if (err) {
-// //       console.log('aaaaaaaaaaaaaaaaaa', err);
-// //       callback(err);
-// //     }
-// //     else {
-// //       console.log('Data Saved in Database===>', result);
-// //       callback(null, result)
-// //     }
-// //   })
-// // }
-
-
-
-// noteModel.prototype.CreateNote = (req, res) => {
-//   console.log("request in model==>", req.body);
-
-//   const userdata = new note({
-//     "userId": req.decoded.payload.user_id,
-//       "title": req.body.title,
-//       "description": req.body.description,
-//       // "reminder": req.body.reminder,
-//        //"color": req.body.color,
-//       // "image": req.body.image,
-//       //  "archive": req.body.archive,
-//       // "pinned": req.body.pinned,
-//       // "trash": req.body.trash
-//   });
-//   userdata.save((err, result) => {
-//       if (err) {
-//           console.log("Model not found", err);
-//           res(err);
-//       } else {
-//           console.log("Note saved sucessfully");
-
-         
-//           // myEmitter.emit('event', 'a', 'b');
-
-
-          
-//          res(null, result);
-//       }
-//   })
-// }
-// /*
-// noteModel.prototype.getNote = (data, callback) => {
-//   console.log('model==>',data)
-//   let obj = {
-//     "_id": data._id
-//   }
-//   note.findById(obj, (err, result) => {
-//     if (err) {
-//       console.log(err);
-//       callback(err)
-
-//     } else {
-//       //console.log();
-//       callback(null, result)
-//     }
-//   })
-// }
-// */
-
-// noteModel.prototype.getNotes = (req, callback) => {
-//  console.log("");
- 
-
-//   note.find({ userId: req.decoded.payload.user_id }, (err, result) => {
-//     if (err) {
-//       console.log("Model not found");
-//       callback(err)
-//     }
-//     else {
-//       console.log("Note Retrieved Successfully");
-//       callback(null, result)
-//     }
-//   })
-// }
-
-// noteModel.prototype.updateColor = (noteId, updateNote, callback) => {
-//   note.findOneAndUpdate(
-//     {
-//       _id: noteId
-//     },
-//     {
-//       $set:
-//       {
-//         color: updateNote
-//       }
-//     }, (err, result) => {
-//       if (err) {
-//         console.log("Color has not been updated");
-//         callback(err)
-//       } else {
-//         console.log("Color Updated successfully", result);
-//         callback(null, updateNote)
-//       }
-//     }
-//   )
-// }
-
-// noteModel.prototype.deleteNote=(data,callback)=>{
-//   console.log("=============================>",data);
-  
-//   note.deleteOne({_id:data},(err,result)=>{
-//     if(err){
-//       console.log("error in deleting note");
-//       callback(err)
-//     }else{
-//       console.log("Result===>",result);
-      
-//       const obj={
-//         status:200,
-//         message:"Note deleted successfully",
-//         result:result,
-//       }
-//       callback(null,obj)
-//     }
-//   })
-// }
-
-// exports.editTitle=(data,callback)=>{
-//   var paramData=data.title
-//   var paramId=data.noteId
-// note.findOneAndUpdate(
-//   {
-//     _id:paramId
-//   },
-//   {
-//     $set:
-//     {
-//       title:paramData,
-//     }
-//   },
-//   (err,result)=>{
-//     if(err){
-//       console.log("error in editing title");
-//       callback(err)
-//     }else{
-//       console.log("title edited");
-//       callback(nul,paramData ,result)   // here result is optional
-//     }
-//   }
-// )
-// }
-// exports.editDescription=(paramId,paramData,callback)=>{
-//   note.findOneAndUpdate(
-//     {
-//       _id:paramId
-//     },
-//     {
-//       $set:
-//       {
-//         description:paramData
-//       }
-//     },
-//     (err,result)=>{
-//       if(err){
-//         console.log("error in editing description");
-//         callback(err)
-//       }else{
-//         console.log("description edited");
-//         callback(null,paramData,result)        //result is optional
-//       }
-//     }
-//   )
-// }
-// /*
-// noteModel.prototype.createArchiveNote=(noteID,archiveNote,callback)=>{
-// console.log("==========>",archiveNote);
-// console.log("============>",noteID); 
-// note.findOneAndUpdate({
-//   _id:noteID
-// },{
-//   $set:{
-//     archive:archiveNote,
-//     trash:false,
-//     pinned:false,
-//   }
-// },(err,result)=>{
-//   if(err){
-//     callback(err)
-//   }else{
-//     callback(null,result)
-//   }
-// })
-// }
-// */
-// noteModel.prototype.createArchiveNote = (objectNote, callback) => {
-//   console.log("notemodel==>", objectNote);
-//   const archNote = new note({
-//     'title': objectNote.title,
-//     'description': objectNote.description
-//   })
-//   note.findOneAndUpdate({
-//     /* _id:noteID  */
-//   }, {
-//       $set: {
-//         archive: archNote,
-//         trash: false,
-//         pinned: false,
-//       }
-//     }, (err, result) => {
-//       if (err) {
-//         console.log("yenappa error", err);
-
-//         callback(err)
-//       } else {
-//         console.log("bantu bantu result bantu==>", result);
-
-//         callback(null, result)
-//       }
-//     })
-// }
-// module.exports = new noteModel();
 
 
 const mongoose = require('mongoose');
-// const EventEmitter = require('events');
 
-// class MyEmitter extends EventEmitter {}
-// const myEmitter = new MyEmitter();
 
-const Schema = mongoose.Schema;
-const NoteSchema = mongoose.Schema({
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'user',
-        required: [true, "userId is required"]
-    },
-    title: {
-        type: String,
-        required: [true, "title is required"]
-    },
-    description: {
-        type: String,
-        required: [true, "discription require"]
-    },
-    reminder: {
-        type: String,
+const mongoSchema = mongoose.Schema
 
-    },
-    color: {
-        type: String,
 
-    },
-    image: {
-        type: String,
+var noteSchema = new mongoSchema({
 
-    },
-    archive: {
-        type: Boolean,
-    },
-    pinned: {
-        type: Boolean,
-    },
-    trash: {
-        type: Boolean,
-    },
-    label: [
-        {
-            type: String,
-            ref: 'labeSchema',
-        }
-    ],
-QandA:[
-    {
-        type:String,
-       
-    }
-]
+  userId: {
+    type: mongoSchema.Types.ObjectId,
+    ref: 'User',
+    required: [true, "UserId required"]
+  },
+  title: {
+    type: String
+  },
+  description: {
+    type: String
+  },
+  archive: {
+    type: Boolean
+  },
+  trash: {
+    type: Boolean
+  },
+  pinned: {
+    type: Boolean
+  },
+  color: {
+    type: String
+  },
+
 },
+  {
+    timestamps: true,
+  },
+
+);
+
+
+var note = mongoose.model("Note", noteSchema)
+
+//function noteModel() { }
+
+function noteModel() { }
+
+noteModel.prototype.createNote = (objectNote, callback) => {
+  //console.log("Input in create note==>", objectNote.body);
+
+
+  var obj = {
+    "userId": objectNote.decoded.payload.user_id,
+    "title": objectNote.body.title,
+    "description": objectNote.body.description,
+    "archive": objectNote.body.archive,
+    "pinned":objectNote.body.pinned,
+    "trash":objectNote.body.trash
+  }
+  console.log("????????????????????????????????????????????????????????????????", obj);
+
+
+  const noteData = new note(obj)
+
+
+  noteData.save((err, result) => {
+    if (err) {
+      console.log('aaaaaaaaaaaaaaaaaa', err);
+      callback(err);
+
+    }
+    else {
+      console.log('Data Saved in Database===>', result);
+      callback(null, result)
+    }
+  })
+
+}
+
+/*
+noteModel.prototype.getNote = (data, callback) => {
+  console.log('model==>',data)
+  let obj = {
+    "_id": data._id
+  }
+  note.findById(obj, (err, result) => {
+    if (err) {
+      console.log(err);
+      callback(err)
+
+    } else {
+      //console.log();
+      callback(null, result)
+    }
+  })
+}
+*/
+
+noteModel.prototype.getNotes = (req, callback) => {
+  // console.log("<><><><><><><><><><><>", req.decoded.payload.user_id);
+
+  note.find({ userId: req.decoded.payload.user_id }, (err, result) => {
+    if (err) {
+      console.log("Model not found");
+      callback(err)
+    }
+    else {
+      console.log("Note Retrieved Successfully");
+      callback(null, result)
+    }
+  })
+}
+
+noteModel.prototype.updateColor = (noteId, updateNote, callback) => {
+  note.findOneAndUpdate(
     {
-        timestamps: true
-    });
-
-const Note = mongoose.model('note', NoteSchema);
-
-class noteModel { }
-
-noteModel.prototype.CreateNote = (req, res) => {
-    console.log("request in model==>", req.body);
-
-    const userdata = new Note({
-        "userId": req.body.userId,
-        "title": req.body.title,
-        "description": req.body.description,
-        "reminder": req.body.reminder,
-        "color": req.body.color,
-        "image": req.body.image,
-        "archive": req.body.archive,
-        "pinned": req.body.pinned,
-        "trash": req.body.trash
-    });
-    userdata.save((err, result) => {
-        if (err) {
-            console.log("Model not found", err);
-            res(err);
-        } else {
-            console.log("Note saved sucessfully");
-
-           
-            // myEmitter.emit('event', 'a', 'b');
-
-
-            
-           res(null, result);
-        }
-    })
-}
-noteModel.prototype.getnote = (req, res) => {
-
-
-    Note.find({ userId: req.decoded.payload.user_id }, (err, data) => {
-
-        if (err) {
-            console.log("error in chat models");
-            res(err);
-        }
-        else {
-            console.log("chat mode get data sucessfully");
-            res(null, data);
-        }
-    })
-
-}
-noteModel.prototype.updatecolor = (paramID, paramData, res) => {
-
-    Note.findOneAndReplace({
-        _id: paramID
+      _id: noteId
     },
-        {
-            $set: {
-                color: paramData
-            }
-        },
-        (err, data) => {
-
-            if (err) {
-                console.log("error in chat models");
-                res(err);
-            }
-            else {
-                console.log("chat mode get data sucessfully");
-                res(null, paramData);
-            }
-        })
+    {
+      $set:
+      {
+        color: updateNote
+      }
+    }, (err, result) => {
+      if (err) {
+        console.log("Color has not been updated");
+        callback(err)
+      } else {
+        console.log("Color Updated successfully", result);
+        callback(null, updateNote)
+      }
+    }
+  )
 }
 
-noteModel.prototype.deleteNote = (req, res) => {
+noteModel.prototype.deleteNote = (data, callback) => {
+  console.log("noteId given to delete note >", data);
 
-    Note.deleteOne({ _id: req.body.noteID }, (err, result) => {
-        if (err) {
-            res(err)
-        } else {
-            console.log("result==>", result);
-            const obj = {
-                status: 200,
-                msg: "note is deleted successfully",
-                result: result
-            }
-            res(null, obj);
-        }
-    })
+  note.deleteOne({ _id: data }, (err, result) => {
+    if (err) {
+      console.log("error in deleting note");
+      callback(err)
+    } else {
+      // console.log("Result in NoteModel===>",result);
+
+      const obj = {
+        status: 200,
+        message: "Note deleted successfully",
+        result: result,
+      }
+      callback(null, obj)
+      console.log("Result in NoteModel===>", obj);
+
+    }
+  })
 }
 
-noteModel.prototype.isArchived = (paramID, paramData, res) => {
-
-    Note.findOneAndUpdate(
-        {
-            _id: paramID
-        },
-        {
-            $set: {
-                archive: paramData,
-                trash: false,
-                pinned: false
-            }
-        },
-        (err, result) => {
-            if (err) {
-                res(err)
-            } else {
-
-                return res(null, paramData)
-            }
-        });
-}
-
-noteModel.prototype.setReminder = (paramID, paramData, res) => {
-
-    Note.findOneAndUpdate(
-        {
-            _id: paramID
-        },
-        {
-            $set: {
-                reminder: paramData,
-
-            }
-        },
-        (err, result) => {
-            if (err) {
-                res(err)
-            } else {
-
-                return res(null, paramData)
-            }
-        });
-}
-
-noteModel.prototype.editTitle = (paramID, paramData, res) => {
-
-    Note.findOneAndUpdate(
-        {
-            _id: paramID
-        },
-        {
-            $set: {
-                title: paramData,
-
-            }
-        },
-        (err, result) => {
-            if (err) {
-                res(err)
-            } else {
-
-                return res(null, paramData)
-            }
-        });
-}
-
-noteModel.prototype.editDescription = (paramID, paramData, res) => {
-
-    Note.findOneAndUpdate(
-        {
-            _id: paramID
-        },
-        {
-            $set: {
-                description: paramData,
-
-            }
-        },
-        (err, result) => {
-            if (err) {
-                res(err)
-            } else {
-
-                return res(null, paramData)
-            }
-        });
-}
-
-noteModel.prototype.getTrashStatus = (id, callback) => {
-    //  console.log("getTrashStatus",id);
-
-    Note.findOne({ _id: id }, (err, result) => {
-        //console.log("id", id);
-        if (err) {
-            callback(err)
-        } else {
-            console.log("status", result)
-            return callback(null, result.trash)
-        }
-    })
-}
-noteModel.prototype.isTrashed = (noteID, trashStatus, callback) => {
-    console.log("in model", noteID, trashStatus);
-    Note.findOneAndUpdate(
-        {
-            _id: noteID
-        },
-        {
-            $set: {
-                trash: trashStatus.status,
-                pinned: false,
-                archive: false
-            }
-        },
-        (err, result) => {
-            if (err) {
-                callback(err)
-            } else {
-
-                return callback(null, trashStatus.status)
-            }
-        });
-};
-
-noteModel.prototype.updatePin = (paramID, paramData, res) => {
-    console.log("param id==>", paramID);
-
-    console.log("param id==>", paramData);
-    Note.findOneAndUpdate(
-        {
-            _id: paramID
-        },
-        {
-            $set: {
-                pinned: paramData,
-                archive: false,
-                trash: false,
-
-            }
-        },
-        (err, result) => {
-            console.log("result in update pin", result);
-
-            if (err) {
-                res(err)
-            } else {
-
-                return res(null, paramData)
-            }
-        });
-}
-
-noteModel.prototype.updateImage = (paramID, paramData, res) => {
-    console.log("param id==>", paramID);
-
-    console.log("param id==>", paramData);
-    Note.findOneAndUpdate(
-        {
-            _id: paramID
-        },
-        {
-            $set: {
-                "image": paramData,
-            }
-        },
-        (err, result) => {
-            console.log("result in update pin", result);
-
-            if (err) {
-                res(err)
-            } else {
-
-                return res(null, paramData)
-            }
-        });
-}
-
-noteModel.prototype.saveLabelToNote = (labelParams, callback) => {
-    console.log("in model", labelParams.noteID);
-
-    var labelledNote = null;
-    var noteID = null;
-
-    labelledNote = labelParams.label;
-    noteID = labelParams.noteID;
-
-    Note.findOneAndUpdate(
-        {
-            _id: noteID
-        },
-        {
-            $push: {
-                label: labelledNote,
-            }
-        },
-        (err, result) => {
-            if (err) {
-                callback(err)
-            } else {
-                console.log("in model success");
-
-                let res = result.label;
-                res.push(labelledNote);
-                return callback(null, res)
-            }
-        });
-}
-
-noteModel.prototype.deleteLabelToNote = (labelParams, callback) => {
-    console.log("in model", labelParams.noteID);
-
-    var labelledNote = null;
-    var noteID = null;
-
-    labelledNote = labelParams.value;
-    noteID = labelParams.noteID;
-
-
-    Note.findOneAndUpdate(
-        {
-            _id: noteID
-        },
-        {
-            $pull: {
-                label: labelledNote,
-            }
-        },
-        (err, result) => {
-            if (err) {
-                callback(err)
-            } else {
-                let newArray = result.label;
-                console.log("in model success result", result);
-                for (let i = 0; i < newArray.length; i++) {
-                    if (newArray[i] === labelledNote) {
-                        newArray.splice(i, 1);
-                        return callback(null, newArray)
-                    }
-                }
-            }
-        });
-}
-
-var labelSchema = new mongoose.Schema({
-    userID: {
-        type: Schema.Types.ObjectId,
-        ref: 'UserSchema'
+noteModel.prototype.editTitle = (data, callback) => {
+  var paramData = data.title
+  var paramId = data.noteId
+  note.findOneAndUpdate(
+    {
+      _id: paramId
     },
-    label: {
-        type: String,
-        require: [true, "Label require"],
-        unique: true
+    {
+      $set:
+      {
+        title: paramData,
+      }
+    },
+    (err, result) => {
+      if (err) {
+        console.log("error in editing title");
+        callback(err)
+      } else {
+        console.log("title edited");
+        callback(nul, paramData, result)   // here result is optional
+      }
     }
-}, {
-        timestamps: true
+  )
+}
+
+noteModel.prototype.editDescription = (paramId,paramData, callback) => {
+  console.log("\nparamId<=====>",paramId);
+  console.log("paramData<====>",paramData);
+  
+  note.findOneAndUpdate(
+    {
+      _id: paramId
+    },
+    {
+      $set:
+      {
+        description: paramData
+      }
+    },
+    (err, result) => {
+      if (err) {
+        console.log("error in editing description");
+        callback(err)
+      } else {
+        console.log("Edited profile",result);
+        console.log("description edited",paramData);
+        callback(null,  paramData,)      
+      }
     }
-)
-var label = mongoose.model('Label', labelSchema);
-
-
-noteModel.prototype.addLabel = (labelData, callback) => {
-    // console.log("ultimate save", labelData);
-
-    const Data = new label(labelData);
-    Data.save((err, result) => {
-        if (err) {
-            console.log(err);
-            callback(err);
-        } else {
-            //  console.log("label result", result);
-
-            return callback(null, result);
-        }
-    })
+  )
 }
 
 
-noteModel.prototype.getLabels = (id, callback) => {
-    //console.log("in model", id);
+noteModel.prototype.isArchived = (noteId, archiveData, callback) => {
+  console.log("noteId in model==>", noteId);
+  console.log("archiveData in model", archiveData);
 
-    label.find({ userID: id.userID }, (err, result) => {
-        if (err) {
-            callback(err)
-        } else {
-            //console.log("labels", result)
-            return callback(null, result)
-        }
+  note.findOneAndUpdate({
+    _id: noteId
+  }, {
+      $set: {
+        archive: archiveData,
+        pinned: false,
+        trash: false,
+      }
+    }, (err, result) => {
+      if (err) {
+        console.log("couldnt update archived data");
+        callback(err);
+      } else {
+        console.log("archived data updated successfully");
+        callback(null, result)
+      }
     })
 }
-noteModel.prototype.deleteLabel = (id, callback) => {
-    // console.log("in model", id);
-
-    label.deleteOne({ _id: id.labelID }, (err, result) => {
-        if (err) {
-            callback(err)
-        } else {
-            //console.log("labels", result)
-            return callback(null, result)
-        }
-    })
+//zibtek  || zipteck
+noteModel.prototype.isPinned=(noteId,pinnedData,callback)=>{
+  console.log("noteId<><><><>",noteId);
+  console.log("pinnedData<><><><>",pinnedData);
+  
+  note.findOneAndUpdate({
+    _id:noteId  
+  },{
+    $set:{
+      pinned:pinnedData,
+      archive:false,
+      trash:false
+    }
+  },(err,result)=>{
+    if(err){
+      console.log("Couldnt update pinned info");
+      callback(err)
+    }else{
+      console.log("pinned data updated successfully");
+      callback(null,result)
+    }
+  })
 }
 
-noteModel.prototype.updateLabel = (changedLabel, callback) => {
-    var editLabel = null;
-    var labelId = null;
-    //  console.log("in model",changedLabel);
-    editLabel = changedLabel.editLabel;
-    labelId = changedLabel.labelID
-    label.findOneAndUpdate(
-        {
-            _id: labelId
-        },
-        {
-            $set: {
-                label: editLabel
-            }
-        },
-        (err, result) => {
-            if (err) {
-                console.log("in modelerr");
-
-                callback(err)
-            } else {
-                console.log("in modelsuccess");
-
-                return callback(null, changedLabel)
-            }
-        });
-};
-
-
-noteModel.prototype.updateqanda= (data, callback) => {
-   
-
-    console.log("dataaaa in model-->",data);
+noteModel.prototype.isTrashed=(noteId,trashedData,callback)=>{
+  console.log("nodeId-----",noteId);
+  console.log("trashData---",trashedData);
     
-   var  question= data.question;
-    noteId = data.noteId
-   
-
-    Note.findOneAndUpdate(
-        {
-            _id:  noteId
-        },
-        {
-            $push: {
-                QandA: question,
-            }
-        },
-        (err, result) => {
-            if (err) {
-                callback(err)
-            } else {
-                console.log("in model success",result);
-                let res = result.QandA;
-                res.push(question);
-                return callback(null, res)
-            }
-        });
-};
-
-
-noteModel.prototype.getqandadetails = (id, callback) => {
-     console.log("q nad a data-->",id);
-
-     Note.findOne({ _id: id.noteID }, (err, result) => {
-        console.log("id",err);
-        if (err) {
-            callback(err)
-        } else {
-            console.log("status", result)
-
-           
-
-           
-            return callback(null, result)
-        }
-    })
-
-    
-}
-module.exports = function(Events) {
-    // Set up Event listeners here
+  note.findOneAndUpdate({
+    _id:noteId
+  },{
+    $set:{
+      trash:trashedData,
+      archive:false,
+      pinned:false,
+    }
+  },(err,result)=>{
+    if(err){
+      console.log("Couldnt update trash info");
+      callback(err)
+    }else{
+      console.log("trash data updated successfully",result);
+      callback(null,result)
+    }
+  })
 }
 
 
 
-module.exports = new noteModel;
 
 
 
-
-
-
-
-
+module.exports = new noteModel();
