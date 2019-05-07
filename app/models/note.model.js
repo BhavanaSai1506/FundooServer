@@ -218,8 +218,8 @@ noteModel.prototype.isArchived = (noteId, archiveData, callback) => {
   }, {
       $set: {
         archive: archiveData,
-        pinned: false,
-        trash: false,
+        // pinned: false,
+        // trash: false,
       }
     }, (err, result) => {
       if (err) {
@@ -231,8 +231,31 @@ noteModel.prototype.isArchived = (noteId, archiveData, callback) => {
       }
     })
 }
+noteModel.prototype.isPinned = (noteId, pinnedData, callback) => {
+  console.log("noteId in model==>", noteId);
+  console.log("pinned Data in model", pinnedData);
+
+  note.findOneAndUpdate({
+    _id: noteId
+  }, {
+      $set: {
+        pinned: pinnedData,
+       
+      }
+    }, (err, result) => {
+      if (err) {
+        console.log("couldnt update pinnned data");
+        callback(err);
+      } else {
+        console.log("pinned data updated successfully");
+        callback(null, result)
+      }
+    })
+}
+
+
 //zibtek  || zipteck
-noteModel.prototype.isPinned=(noteId,pinnedData,callback)=>{
+noteModel.prototype.clearisPinned=(noteId,pinnedData,callback)=>{
   console.log("noteId<><><><>",noteId);
   console.log("pinnedData<><><><>",pinnedData);
   
