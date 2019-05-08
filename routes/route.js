@@ -25,5 +25,5 @@ route.put('/editDescription',Middleware.checkTokenAuthentication,noteController.
 route.put('/isArchived',Middleware.checkTokenAuthentication,noteController.isArchived)
 route.put('/isPinned',Middleware.checkTokenAuthentication,noteController.isPinned)
 route.put('/isTrashed',Middleware.checkTokenAuthentication,noteController.isTrashed)
-
+route.put('/setReminder',Middleware.checkTokenAuthentication,noteController.setReminder)
 module.exports=route;

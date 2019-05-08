@@ -31,7 +31,9 @@ var noteSchema = new mongoSchema({
   color: {
     type: String
   },
-
+reminder:{
+  type:String
+}
 },
   {
     timestamps: true,
@@ -300,7 +302,28 @@ noteModel.prototype.isTrashed=(noteId,trashedData,callback)=>{
     }
   })
 }
-
+noteModel.prototype.setReminder=(data,callback)=>{
+  console.log("noteId-----",data.nodeId);
+  console.log("reminserData-----",data.reminder);
+  note.findOneAndUpdate({
+    _id:data.noteId
+  },{
+    $set:{
+      renminder:data.reminder,
+      trash:false
+    }
+    },(err,result)=>{
+      if(err){
+        console.log(' couldnt update reminder info');
+        callback(err)
+      }
+      else{
+        console.log('r4eminder data updated successfully',result);
+        callback(null,result)
+      }
+    
+  })
+}
 
 
 

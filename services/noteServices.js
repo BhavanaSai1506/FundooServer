@@ -356,6 +356,23 @@ exports.isTrashed=(noteId,trashData,callback)=>{
         console.log("error in services catch",err) 
     }
 }
+exports.setReminder=(data,callback)=>{
+    try{
+        noteModel.setReminder(data,(err,result)=>{
+            if(err){
+                console.log('error in services reminder');
+                callback(err)
+            }
+            else{
+                console.log('in services',result)
+                callback(null,result)
+            }
+        })
+    }
+    catch(err){
+        console.log('error in services catch',err);
+    }
+}
 
 
 

@@ -622,3 +622,35 @@ exports.isTrashed = (req, res) => {
     }
   }
 }
+exports.setReminder=(req,res)=>{
+  req.checkBody('noteId','nodeId is required').not().isEmpty()
+  req.checkBody('reminder','reminderdate is required').not().isEmpty()
+
+  var errors=req.validationErrors();
+  responseResults={}
+  if(errors){
+    responseResult=success=false,
+    responseResult=erroprs=errors,
+    res.status(500).send(responseResult)
+    try{
+      var responseResult={}
+      noteId=req.body.noteId,
+      reminder=req.body.reminder
+      noteService.setReminder(data,(err,result)=>{
+        if(err){
+          responseResult.success=false,
+          responseResult.err=err,
+          res.state(500).send(responseResult)
+        }
+        else{
+          responseResult.success=true,
+          responseResult.result=result,
+          res.status(200).send(responseResult)
+        }
+      })
+    }catch(err){
+      console.log('error in controller',err)
+    }
+  }
+
+}
